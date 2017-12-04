@@ -6,7 +6,7 @@
     - instances.yml
 
   tasks:
-    - include: tasks/digitalocean.yml
+    - include_tasks: tasks/digitalocean.yml
 
 - name: initialize nodes
   hosts: nodes

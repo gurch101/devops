@@ -1,4 +1,4 @@
-Role Name
+Common
 =========
 
 Sets up a deploy user and disables password authentication for SSH

@@ -8,11 +8,11 @@
   tasks:
     - include: tasks/digitalocean.yml
 
-
-- hosts: nodes
-  remote_user: root
+- name: initialize nodes
+  hosts: nodes
+  user: root
   gather_facts: false
 
-  tasks:
-    - name: Wait for port 22 to become available.
-      local_action: "wait_for port=22 host={{ inventory_hostname }}"
+  roles:
+    - common
+

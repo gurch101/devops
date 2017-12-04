@@ -1,6 +1,6 @@
-# Ansible Playbooks
+# Devops
 
-A bunch of playbooks to provision and configure digital ocean droplets
+A bunch of ansible playbooks to provision and configure digital ocean droplets
 
 ### Installation
 
@@ -16,6 +16,8 @@ A bunch of playbooks to provision and configure digital ocean droplets
 
 4. run `python digital_ocean.py --ssh-keys` to get your ssh key id
 
-5. setup instances.yml with your droplet details
+5. setup `instances.yml` with your droplet details
 
-5. run `ansible-playbook provision.yml` to create your droplets!
+6. add a password in `group_vars/all` for a ssh user
+
+7. run `ansible-playbook provision.yml` to create your droplets!

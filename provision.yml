@@ -1,0 +1,18 @@
+---
+- name: Provision digital ocean droplets
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - instances.yml
+
+  tasks:
+    - include: tasks/digitalocean.yml
+
+
+- hosts: nodes
+  remote_user: root
+  gather_facts: false
+
+  tasks:
+    - name: Wait for port 22 to become available.
+      local_action: "wait_for port=22 host={{ inventory_hostname }}"

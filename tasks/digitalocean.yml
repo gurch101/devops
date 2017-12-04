@@ -1,0 +1,19 @@
+---
+- name: Create droplets
+  digital_ocean:
+    state: present
+    command: droplet
+    name: "{{ item.name }}"
+    size_id: "{{ item.size | default('512mb') }}"
+    image_id: "{{ item.image | default('ubuntu-16-04-x64') }}"
+    region_id: "{{ item.region | default('sfo1') }}"
+    unique_name: yes
+    ssh_key_ids: "{{ item.ssh_key_ids }}"
+  register: do_response
+  with_items: "{{ droplets }}"
+
+- name: Add new host to our inventory.
+  add_host:
+    name: "{{ item.droplet.ip_address }}"
+    groups: do,nodes
+  with_items: "{{ do_response.results }}"

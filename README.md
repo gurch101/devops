@@ -12,12 +12,8 @@ A bunch of ansible playbooks to provision and configure digital ocean droplets
     export DO_API_KEY=<your API key here>
     ```
 
-3. add an [SSH Key](https://cloud.digitalocean.com/settings/security)
+3. setup `instances.yml` with your droplet details. See `provisioners/digitalocean.yml` for variables.
 
-4. run `python digital_ocean.py --ssh-keys` to get your ssh key id
+4. Add `deploy_user_passwd` to `instances.yml`. This is used to create a user on new nodes and can be set to any encrypted password.
 
-5. setup `instances.yml` with your droplet details
-
-6. add a password in `group_vars/all` for a ssh user
-
-7. run `ansible-playbook provision.yml` to create your droplets!
+5. run `ansible-playbook webservers.yml` to create your droplets!

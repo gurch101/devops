@@ -1,4 +1,16 @@
 ---
+- name: Create SSH key
+  digital_ocean:
+    state: present
+    command: ssh
+    name: ansible-deploy-key
+    ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  register: do_key_response
+
+- name: Set SSH key fact
+  set_fact:
+    do_ssh_key_id: "{{ do_key_response.ssh_key.id }}"
+
 - name: Create droplets
   digital_ocean:
     state: present
@@ -8,7 +20,7 @@
     image_id: "{{ item.image | default('ubuntu-16-04-x64') }}"
     region_id: "{{ item.region | default('sfo1') }}"
     unique_name: yes
-    ssh_key_ids: "{{ item.ssh_key_ids }}"
+    ssh_key_ids: "{{ do_ssh_key_id }}"
     wait: true
   register: do_response
   with_items: "{{ droplets }}"

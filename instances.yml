@@ -1,2 +1,3 @@
 droplets:
-  - { name: webserver, ssh_key_ids:  16105703 }
+  - { name: webserver-1, ssh_key_ids:  16105703, group: webservers }
+deploy_user_passwd: some-encrypted-passwd

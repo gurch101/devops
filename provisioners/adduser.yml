@@ -1,0 +1,26 @@
+---
+- name: Wait for port 22 to become available
+  local_action: "wait_for port=22 host={{ inventory_hostname }}"
+
+- name: Add python soft link
+  raw: test -e /usr/bin/python || ln -s /usr/bin/python3 /usr/bin/python
+  register: output
+  changed_when: output.stdout !=""
+
+- name: Add deploy user
+  user:
+    name: deploy
+    password: "{{ deploy_user_passwd }}"
+    shell: /bin/bash
+
+- name: Add authorized key for deploy user
+  authorized_key:
+    user: deploy
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+- name: Add deploy user to sudoers
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: "deploy ALL"
+    line: "deploy ALL=(ALL) ALL"
+    state: present

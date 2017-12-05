@@ -6,13 +6,16 @@
     - instances.yml
 
   tasks:
-    - include_tasks: tasks/digitalocean.yml
+    - include_tasks: provisioners/digitalocean.yml
 
-- name: initialize nodes
-  hosts: nodes
+- name: Add deploy user to new instances
+  hosts: new-nodes
   user: root
   gather_facts: false
+  vars_files:
+    - instances.yml
 
-  roles:
-    - common
+  tasks:
+    - import_tasks: provisioners/adduser.yml
+
 
